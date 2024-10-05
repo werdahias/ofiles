@@ -303,7 +303,7 @@ mod tests {
 
         {
             let _ = std::fs::remove_file(orig);
-            let _ = std::fs::remove_file(sym);
+            let _ = std::fs::remove_file(sym).expect("file was removed");
             let orig_file = File::create(orig).unwrap();
             symlinkat(orig, None, sym).unwrap();
         }

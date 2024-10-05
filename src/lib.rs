@@ -300,8 +300,8 @@ mod tests {
         let sym = "/tmp/.symlink";
 
         {
-            std::fs::remove_file(orig);
-            std::fs::remove_file(sym);
+            let _ = std::fs::remove_file(orig);
+            let _ = std::fs::remove_file(sym);
             let orig_file = File::create(orig).unwrap();
             symlinkat(orig, None, sym).unwrap();
         }

@@ -199,7 +199,7 @@ mod tests {
     fn test_ofile_other_process_unix_socket() {
         env_logger::init();
         let path = "/tmp/.opath_socket";
-
+        unsafe{
         match fork() {
             Ok(ForkResult::Parent { child, .. }) => {
                 eprintln!("Child pid: {}", child);
@@ -220,7 +220,7 @@ mod tests {
                 thread::sleep(Duration::from_millis(5000));
             },
             Err(_) => panic!("Fork failed"),
-        }
+        }}
     }
     }
 
@@ -251,7 +251,7 @@ mod tests {
     #[test]
     fn test_file_other_process() {
         let path = "/tmp/.opath_tmp";
-
+        unsafe{
         match fork() {
             Ok(ForkResult::Parent { child, .. }) => {
                 thread::sleep(Duration::from_millis(100));
@@ -267,7 +267,7 @@ mod tests {
                 thread::sleep(Duration::from_millis(500));
             },
             Err(_) => panic!("Fork failed"),
-        }
+        }}
     }
     }
 
@@ -275,7 +275,7 @@ mod tests {
     #[test]
     fn test_directory_other_process() {
         let path = ".";
-
+        unsafe{
         match fork() {
             Ok(ForkResult::Parent { child, .. }) => {
                 thread::sleep(Duration::from_millis(100));
@@ -290,7 +290,7 @@ mod tests {
                 thread::sleep(Duration::from_millis(500));
             },
             Err(_) => panic!("Fork failed"),
-        }
+        }}
     }
     }
 

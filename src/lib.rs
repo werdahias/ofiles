@@ -4,7 +4,7 @@ use std::path::{Path, PathBuf};
 
 use error_chain;
 use glob::glob;
-use log::{trace, info};
+use log::{info, trace};
 use nix::sys::stat::{lstat, SFlag};
 
 /// Newtype pattern to avoid type errors.
@@ -160,7 +160,9 @@ pub fn opath<P: AsRef<Path>>(path: P) -> Result<Vec<Pid>> {
             }
         }
     } else {
-        return Err(crate::ErrorKind::InodeNotFound(format!("Unknown file {:?}", stat_info)).into());
+        return Err(
+            crate::ErrorKind::InodeNotFound(format!("Unknown file {:?}", stat_info)).into(),
+        );
     }
 
     Ok(pids)
@@ -177,12 +179,12 @@ mod tests {
     use std::time::Duration;
 
     use env_logger;
+    use nix::unistd::symlinkat;
     use nix::unistd::{fork, ForkResult};
     use rusty_fork::rusty_fork_id;
     use rusty_fork::rusty_fork_test;
     use rusty_fork::rusty_fork_test_name;
     use tempfile::{NamedTempFile, TempDir};
-    use nix::unistd::symlinkat;
 
     // TODO: test socket file, fifo
 
